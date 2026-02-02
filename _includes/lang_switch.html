@@ -1,0 +1,19 @@
+{% assign current_lang = page.lang | default: site.lang %}
+
+<div class="lang-switch">
+  {% if site.data.langs %}
+    {% for l in site.data.langs %}
+      {% if l.code == current_lang %}
+  <span class="active">{{ l.label | default: l.code }}</span>
+      {% else %}
+        {% if l.url %}
+  <a href="{{ l.url }}" rel="noopener">{{ l.label | default: l.code }}</a>
+        {% else %}
+  <span class="muted">{{ l.label | default: l.code }}</span>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+  <span class="active">{{ current_lang | default: "" }}</span>
+  {% endif %}
+</div>

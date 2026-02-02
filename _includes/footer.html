@@ -1,0 +1,17 @@
+{% assign current_lang = page.lang | default: site.lang %}
+{% assign footer = nil %}
+{% if site.data.footer %}
+  {% if site.data.footer[current_lang] %}
+    {% assign footer = site.data.footer[current_lang] %}
+  {% else %}
+    {% assign footer = site.data.footer %}
+  {% endif %}
+{% endif %}
+
+<footer>
+  {% if footer and footer.size and footer.size > 0 %}
+    {% for line in footer %}
+  <p>{{ line }}</p>
+    {% endfor %}
+  {% endif %}
+</footer>

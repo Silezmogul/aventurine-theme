@@ -1,0 +1,27 @@
+{% assign current_lang = page.lang | default: site.lang %}
+{% assign nav = nil %}
+{% if site.data.nav %}
+  {% if site.data.nav[current_lang] %}
+    {% assign nav = site.data.nav[current_lang] %}
+  {% else %}
+    {% assign nav = site.data.nav %}
+  {% endif %}
+{% endif %}
+
+<header>
+  <div class="site-title">
+    <a href="/">{{ site.title }}</a>
+  </div>
+
+  {% if nav and nav.size and nav.size > 0 %}
+  <nav>
+    {% for item in nav %}
+      {% if item.url and item.title %}
+    <a href="{{ item.url }}">{{ item.title }}</a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {% include lang_switch.html %}
+</header>
