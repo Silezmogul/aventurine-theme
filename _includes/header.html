@@ -8,13 +8,18 @@
   {% endif %}
 {% endif %}
 
-<header>
-  <div class="site-title">
-    <a href="/">{{ site.title }}</a>
+<header class="site-header">
+  <div class="header-row">
+    <div class="site-title">
+      <a href="/">{{ site.title }}</a>
+    </div>
+    <div class="header-lang">
+      {% include lang_switch.html %}
+    </div>
   </div>
 
   {% if nav and nav.size and nav.size > 0 %}
-  <nav>
+  <nav class="site-nav">
     {% for item in nav %}
       {% if item.url and item.title %}
     <a href="{{ item.url }}">{{ item.title }}</a>
@@ -22,6 +27,4 @@
     {% endfor %}
   </nav>
   {% endif %}
-
-  {% include lang_switch.html %}
 </header>
