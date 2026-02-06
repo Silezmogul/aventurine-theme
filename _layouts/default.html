@@ -8,6 +8,46 @@
     <meta name="description" content="{{ meta_desc | escape }}">
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 
+    {% assign org_name = site.url | replace: "https://", "" | replace: "http://", "" | split: "/" | first %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "{{ site.url }}/#organization",
+          "name": {{ org_name | jsonify }},
+          "url": "{{ site.url }}/"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ site.url }}/#website",
+          "url": "{{ site.url }}/",
+          "name": {{ site.title | jsonify }},
+          "description": {{ site.description | strip_html | strip_newlines | jsonify }},
+          "inLanguage": {{ site.lang | jsonify }},
+          "publisher": { "@id": "{{ site.url }}/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "{{ site.url }}{{ page.url }}#webpage",
+          "url": "{{ site.url }}{{ page.url }}",
+          "name": {{ page.title | default: site.title | jsonify }},
+          "description": {{ meta_desc | jsonify }},
+          "isPartOf": { "@id": "{{ site.url }}/#website" },
+          "inLanguage": {{ page.lang | default: site.lang | jsonify }},
+          "publisher": { "@id": "{{ site.url }}/#organization" }
+          {% if site.author %},
+          "author": {
+            "@type": "Person",
+            "name": {{ site.author | jsonify }}
+          }
+          {% endif %}
+        }
+      ]
+    }
+    </script>
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ site.title | escape }}">
     <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
