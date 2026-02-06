@@ -60,12 +60,27 @@
     <link rel="stylesheet" href="/assets/css/site.css">
 
     {% assign current_lang = page.lang | default: site.lang %}
+    {% assign x_default_href = nil %}
     {% if site.data.langs %}
       {% for l in site.data.langs %}
-        {% if l.url and l.code and l.code != current_lang %}
-    <link rel="alternate" href="{{ l.url }}" hreflang="{{ l.code }}">
+        {% if l.url and l.code %}
+          {% if l.url contains '://' %}
+            {% assign alt_href = l.url %}
+          {% else %}
+            {% assign alt_href = site.url | append: l.url %}
+          {% endif %}
+
+          {% if l.code == 'en' and x_default_href == nil %}
+            {% assign x_default_href = alt_href %}
+          {% endif %}
+
+    <link rel="alternate" href="{{ alt_href }}" hreflang="{{ l.code }}">
         {% endif %}
       {% endfor %}
+
+      {% if x_default_href %}
+    <link rel="alternate" href="{{ x_default_href }}" hreflang="x-default">
+      {% endif %}
     {% endif %}
   </head>
   <body>
