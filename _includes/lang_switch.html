@@ -7,7 +7,7 @@
   <span class="active">{{ l.label | default: l.code }}</span>
       {% else %}
         {% if l.url %}
-  <a href="{{ l.url }}" rel="noopener">{{ l.label | default: l.code }}</a>
+  <a class="muted" href="{{ l.url }}" rel="noopener">{{ l.label | default: l.code }}</a>
         {% else %}
   <span class="muted">{{ l.label | default: l.code }}</span>
         {% endif %}

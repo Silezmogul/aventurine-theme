@@ -86,6 +86,14 @@ a:hover {
   color: var(--muted);
 }
 
+.lang-switch a.muted {
+  color: var(--muted);
+}
+
+.lang-switch a.muted:hover {
+  color: var(--muted);
+}
+
 main h1 {
   font-size: clamp(2.25rem, 4vw, 3rem);
   line-height: 1.08;
