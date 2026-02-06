@@ -8,6 +8,15 @@
     <meta name="description" content="{{ meta_desc | escape }}">
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 
+    {% assign og_image_href = nil %}
+    {% if site.og_image %}
+      {% if site.og_image contains '://' %}
+        {% assign og_image_href = site.og_image %}
+      {% else %}
+        {% assign og_image_href = site.url | append: site.og_image %}
+      {% endif %}
+    {% endif %}
+
     {% assign org_name = site.url | replace: "https://", "" | replace: "http://", "" | split: "/" | first %}
     <script type="application/ld+json">
     {
@@ -53,8 +62,18 @@
     <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
     <meta property="og:description" content="{{ meta_desc | escape }}">
     <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    {% if og_image_href %}
+    <meta property="og:image" content="{{ og_image_href }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    {% endif %}
 
+    {% if og_image_href %}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ og_image_href }}">
+    {% else %}
     <meta name="twitter:card" content="summary">
+    {% endif %}
     <meta name="twitter:title" content="{{ page.title | default: site.title | escape }}">
     <meta name="twitter:description" content="{{ meta_desc | escape }}">
     <link rel="stylesheet" href="/assets/css/site.css">
